@@ -59,6 +59,4 @@ export const taskReducer = (
     default:
       return state;
   }
-
-  return state;
 };
