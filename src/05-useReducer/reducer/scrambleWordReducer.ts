@@ -67,7 +67,7 @@ export type ScrambleWordsAction =
   | { type: "SET_GUESS"; payload: string }
   | { type: "CHECK_ANSWER" }
   | { type: "SKIP_WORD" }
-  | { type: "START_NEW_GAME" };
+  | { type: "START_NEW_GAME"; payload: ScrambleWordsState };
 
 export const scrambleWordsReducer = (
   state: ScrambleWordsState,
@@ -115,23 +115,8 @@ export const scrambleWordsReducer = (
       };
     }
 
-    case "START_NEW_GAME": {
-      const shuffledWords = shuffleArray([...GAME_WORDS]);
-
-      return {
-        currentWord: shuffledWords[0],
-        errorCounter: 0,
-        guess: "",
-        isGameOver: false,
-        maxAllowErrors: 3,
-        maxSkips: 3,
-        points: 0,
-        scrambledWord: scrambleWord(shuffledWords[0]),
-        skipCounter: 0,
-        words: shuffledWords,
-        totalWords: shuffledWords.length,
-      };
-    }
+    case "START_NEW_GAME":
+      return action.payload;
 
     default:
       return state;
