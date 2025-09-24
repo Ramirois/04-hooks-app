@@ -2,18 +2,24 @@ import { UserContext } from "@/09-useContext/context/UserContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useContext, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export const LoginPages = () => {
   const [userId, setUserId] = useState("");
   const { login } = useContext(UserContext);
-
+  const navigation = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const result = login(+userId);
     console.log(result);
-    
+    if (!result) {
+      toast.error("Usuario no encontrado");
+      return;
+    }
+
+    navigation("/profile")
   };
 
   return (
